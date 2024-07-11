@@ -1,0 +1,23 @@
+[
+  {
+    "name": "John",
+    "surname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "1234567890",
+    "image": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "name": "Jane",
+    "surname": "Smith",
+    "email": "jane.smith@example.com",
+    "phone": "9876543210",
+    "image": "https://randomuser.me/api/portraits/women/1.jpg"
+  },
+  {
+    "name": "Alice",
+    "surname": "Johnson",
+    "email": "alice.johnson@example.com",
+    "phone": "5555555555",
+    "image": "https://randomuser.me/api/portraits/women/2.jpg"
+  }
+]
