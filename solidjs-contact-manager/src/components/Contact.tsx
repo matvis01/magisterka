@@ -1,4 +1,5 @@
 type ContactProps = {
+  id: number;
   name: string;
   surname: string;
   email: string;
@@ -9,7 +10,7 @@ type ContactProps = {
 export default function Contact(props: ContactProps) {
   const { name, surname, email, phone, image } = props;
   return (
-    <div class="card card-compact bg-base-100 w-96 shadow-xl">
+    <div class="card card-compact bg-neutral w-full shadow-xl text-neutral-content">
       <div class="card-body">
         <div class="flex items-center gap-5">
           <img
@@ -18,13 +19,13 @@ export default function Contact(props: ContactProps) {
             class="rounded-full w-16 h-16"
           />
           <div>
-            <h2 class="text-lg font-bold">
+            <h2 class="text-lg font-bold ">
               {name} {surname}
             </h2>
 
-            <p class="text-sm text-gray-500">{email}</p>
+            <p class="text-sm ">{email}</p>
 
-            <p class="text-sm text-gray-500">{phone}</p>
+            <p class="text-sm ">{phone}</p>
           </div>
         </div>
       </div>
