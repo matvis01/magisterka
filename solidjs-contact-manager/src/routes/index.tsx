@@ -9,7 +9,7 @@ type ContactType = {
   surname: string;
   email: string;
   phone: string;
-  image?: string;
+  image: string;
 };
 
 export default function Home() {
@@ -17,10 +17,22 @@ export default function Home() {
   const [allContacts, setAllContacts] =
     createSignal<ContactType[]>(testContacts);
   const [contacts, setContacts] = createSignal(allContacts());
+  const [contactToEdit, setContactToEdit] = createSignal<
+    ContactType | undefined
+  >(undefined);
 
-  const addContact = (contact: ContactType) => {
-    setAllContacts([...allContacts(), contact]);
+  const addOrUpdateContact = (contact: ContactType) => {
+    if (contactToEdit()) {
+      // Update existing contact
+      setAllContacts(
+        allContacts().map((c) => (c.id === contact.id ? contact : c))
+      );
+    } else {
+      // Add new contact
+      setAllContacts([...allContacts(), contact]);
+    }
     filterContacts(searchVal());
+    setContactToEdit(undefined); // Reset after adding/updating
   };
 
   function filterContacts(value: string) {
@@ -29,9 +41,9 @@ export default function Home() {
       setContacts(allContacts());
       return;
     }
-    let allValues = value.split(" ");
+    const allValues = value.split(" ");
     let newListOfContacts = allContacts();
-    for (let val of allValues) {
+    for (const val of allValues) {
       newListOfContacts = newListOfContacts.filter(
         (contact) =>
           contact.name.toLowerCase().includes(val.toLowerCase()) ||
@@ -42,6 +54,11 @@ export default function Home() {
     }
     setContacts(newListOfContacts);
   }
+
+  const deleteContact = (id: number) => {
+    setAllContacts(allContacts().filter((contact) => contact.id !== id));
+    filterContacts(searchVal());
+  };
 
   return (
     <main class="w-full h-full flex justify-center text-base-content ">
@@ -57,20 +74,35 @@ export default function Home() {
           />
           <button
             class="btn btn-primary btn-lg"
-            onClick={() =>
+            onClick={() => {
+              setContactToEdit(undefined); // Reset edit mode
               (
                 document.getElementById("add_modal") as HTMLDialogElement
-              )?.showModal()
-            }
+              )?.showModal();
+            }}
           >
-            add contact
+            Add Contact
           </button>
 
-          <AddContact onAddContact={addContact} />
+          <AddContact
+            onAddContact={addOrUpdateContact}
+            contactToEdit={contactToEdit()}
+            onDeleteContact={deleteContact}
+          />
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 w-full justify-items-center items-center">
           {contacts().map((contact) => (
-            <Contact {...contact} />
+            <div class="card">
+              <Contact
+                {...contact}
+                edit={() => {
+                  setContactToEdit(contact);
+                  (
+                    document.getElementById("add_modal") as HTMLDialogElement
+                  )?.showModal();
+                }}
+              />
+            </div>
           ))}
         </div>
       </div>
