@@ -1,59 +1,59 @@
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect } from "solid-js"
 
 interface Contact {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  image: string;
+  id: number
+  name: string
+  surname: string
+  email: string
+  phone: string
+  image: string
 }
 
 interface AddContactProps {
-  onAddContact: (contact: Contact) => void;
-  onDeleteContact?: (id: number) => void; // Optional prop for deleting a contact
-  contactToEdit?: Contact; // Optional prop for editing
+  onAddContact: (contact: Contact) => void
+  onDeleteContact?: (id: number) => void // Optional prop for deleting a contact
+  contactToEdit?: Contact // Optional prop for editing
 }
 
 const AddContact = (props: AddContactProps) => {
-  const [name, setName] = createSignal("");
-  const [surname, setSurname] = createSignal("");
-  const [email, setEmail] = createSignal("");
-  const [phone, setPhone] = createSignal("");
-  const [image, setImage] = createSignal("");
+  const [name, setName] = createSignal("")
+  const [surname, setSurname] = createSignal("")
+  const [email, setEmail] = createSignal("")
+  const [phone, setPhone] = createSignal("")
+  const [image, setImage] = createSignal("")
 
   // Update the form fields when contactToEdit changes
   createEffect(() => {
     if (props.contactToEdit) {
-      setName(props.contactToEdit.name);
-      setSurname(props.contactToEdit.surname);
-      setEmail(props.contactToEdit.email);
-      setPhone(props.contactToEdit.phone);
-      setImage(props.contactToEdit.image);
+      setName(props.contactToEdit.name)
+      setSurname(props.contactToEdit.surname)
+      setEmail(props.contactToEdit.email)
+      setPhone(props.contactToEdit.phone)
+      setImage(props.contactToEdit.image)
     } else {
       // Clear the form if no contact is being edited
-      setName("");
-      setSurname("");
-      setEmail("");
-      setPhone("");
-      setImage("");
+      setName("")
+      setSurname("")
+      setEmail("")
+      setPhone("")
+      setImage("")
     }
-  });
+  })
 
   const handleImageChange = (e: Event) => {
-    const target = e.currentTarget as HTMLInputElement;
-    const file = target.files?.[0];
+    const target = e.currentTarget as HTMLInputElement
+    const file = target.files?.[0]
     if (file) {
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file); // Convert the image file to a data URL
+        setImage(reader.result as string)
+      }
+      reader.readAsDataURL(file) // Convert the image file to a data URL
     }
-  };
+  }
 
   const handleSubmit = (e: Event) => {
-    e.preventDefault();
+    e.preventDefault()
     const newContact: Contact = {
       id: props.contactToEdit ? props.contactToEdit.id : Date.now(),
       name: name(),
@@ -61,25 +61,25 @@ const AddContact = (props: AddContactProps) => {
       email: email(),
       phone: phone(),
       image: image(),
-    };
-    props.onAddContact(newContact);
+    }
+    props.onAddContact(newContact)
 
     // Reset the form after submission
-    setName("");
-    setSurname("");
-    setEmail("");
-    setPhone("");
-    setImage("");
+    setName("")
+    setSurname("")
+    setEmail("")
+    setPhone("")
+    setImage("")
 
-    (document.getElementById("add_modal") as HTMLDialogElement)?.close();
-  };
+    ;(document.getElementById("add_modal") as HTMLDialogElement)?.close()
+  }
 
   const handleDelete = () => {
     if (props.contactToEdit && props.onDeleteContact) {
-      props.onDeleteContact(props.contactToEdit.id);
-      (document.getElementById("add_modal") as HTMLDialogElement)?.close();
+      props.onDeleteContact(props.contactToEdit.id)
+      ;(document.getElementById("add_modal") as HTMLDialogElement)?.close()
     }
-  };
+  }
 
   return (
     <dialog class="modal" id="add_modal">
@@ -185,7 +185,7 @@ const AddContact = (props: AddContactProps) => {
         </button>
       </form>
     </dialog>
-  );
-};
+  )
+}
 
-export default AddContact;
+export default AddContact

@@ -1,48 +1,48 @@
-import { createSignal } from "solid-js";
-import Contact from "../components/Contact";
-import testContacts from "../data/testContacts.json";
-import AddContact from "~/components/AddContact";
+import { createSignal } from "solid-js"
+import Contact from "../components/Contact"
+import testContacts from "../data/testContacts.json"
+import AddContact from "~/components/AddContact"
 
 type ContactType = {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  image: string;
-};
+  id: number
+  name: string
+  surname: string
+  email: string
+  phone: string
+  image: string
+}
 
 export default function Home() {
-  const [searchVal, setSearchVal] = createSignal("");
+  const [searchVal, setSearchVal] = createSignal("")
   const [allContacts, setAllContacts] =
-    createSignal<ContactType[]>(testContacts);
-  const [contacts, setContacts] = createSignal(allContacts());
+    createSignal<ContactType[]>(testContacts)
+  const [contacts, setContacts] = createSignal(allContacts())
   const [contactToEdit, setContactToEdit] = createSignal<
     ContactType | undefined
-  >(undefined);
+  >(undefined)
 
   const addOrUpdateContact = (contact: ContactType) => {
     if (contactToEdit()) {
       // Update existing contact
       setAllContacts(
         allContacts().map((c) => (c.id === contact.id ? contact : c))
-      );
+      )
     } else {
       // Add new contact
-      setAllContacts([...allContacts(), contact]);
+      setAllContacts([...allContacts(), contact])
     }
-    filterContacts(searchVal());
-    setContactToEdit(undefined); // Reset after adding/updating
-  };
+    filterContacts(searchVal())
+    setContactToEdit(undefined) // Reset after adding/updating
+  }
 
   function filterContacts(value: string) {
-    setSearchVal(value);
+    setSearchVal(value)
     if (value === "") {
-      setContacts(allContacts());
-      return;
+      setContacts(allContacts())
+      return
     }
-    const allValues = value.split(" ");
-    let newListOfContacts = allContacts();
+    const allValues = value.split(" ")
+    let newListOfContacts = allContacts()
     for (const val of allValues) {
       newListOfContacts = newListOfContacts.filter(
         (contact) =>
@@ -50,15 +50,15 @@ export default function Home() {
           contact.surname.toLowerCase().includes(val.toLowerCase()) ||
           contact.email.toLowerCase().includes(val.toLowerCase()) ||
           contact.phone.toLowerCase().includes(val.toLowerCase())
-      );
+      )
     }
-    setContacts(newListOfContacts);
+    setContacts(newListOfContacts)
   }
 
   const deleteContact = (id: number) => {
-    setAllContacts(allContacts().filter((contact) => contact.id !== id));
-    filterContacts(searchVal());
-  };
+    setAllContacts(allContacts().filter((contact) => contact.id !== id))
+    filterContacts(searchVal())
+  }
 
   return (
     <main class="w-full h-full flex justify-center text-base-content ">
@@ -75,10 +75,10 @@ export default function Home() {
           <button
             class="btn btn-primary btn-lg"
             onClick={() => {
-              setContactToEdit(undefined); // Reset edit mode
-              (
+              setContactToEdit(undefined) // Reset edit mode
+              ;(
                 document.getElementById("add_modal") as HTMLDialogElement
-              )?.showModal();
+              )?.showModal()
             }}
           >
             Add Contact
@@ -95,15 +95,15 @@ export default function Home() {
             <Contact
               {...contact}
               edit={() => {
-                setContactToEdit(contact);
-                (
+                setContactToEdit(contact)
+                ;(
                   document.getElementById("add_modal") as HTMLDialogElement
-                )?.showModal();
+                )?.showModal()
               }}
             />
           ))}
         </div>
       </div>
     </main>
-  );
+  )
 }
