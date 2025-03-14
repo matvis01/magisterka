@@ -1,0 +1,60 @@
+marcel - ember, angular, react
+mateusz - vue, solid, svelte 
+
+
+Aby przeprowadzić kompleksowe badania i porównania różnych frameworków, proponuję zbudować po jednej aplikacji na każdym z wymienionych frameworków: Ember, Angular, React, Vue, Solid, Svelte. Każda z tych aplikacji powinna mieć te same funkcjonalności, co pozwoli na rzetelne porównanie pod każdym z podpunktów. Poniżej znajdują się propozycje aplikacji na każdy z frameworków:
+
+1. **Ember.js**: Aplikacja do zarządzania kolekcją książek.
+   - Funkcjonalności: dodawanie, edytowanie, usuwanie książek, przeglądanie listy książek, wyszukiwanie książek.
+   - Cel: Sprawdzenie wydajności Ember.js, jego podejścia do zarządzania stanem oraz jak łatwo można go nauczyć się i używać w praktyce.
+
+2. **Angular**: Aplikacja do zarządzania zadaniami (To-Do List).
+   - Funkcjonalności: tworzenie nowych zadań, edytowanie, usuwanie, oznaczanie jako wykonane, filtrowanie zadań (np. wykonane, niewykonane).
+   - Cel: Porównanie szybkości renderowania Angulara, łatwości zarządzania stanem aplikacji za pomocą wbudowanych narzędzi Angulara (np. NgRx) oraz ocena dokumentacji i materiałów edukacyjnych.
+
+3. **React**: Aplikacja do śledzenia budżetu domowego.
+   - Funkcjonalności: dodawanie, edytowanie i usuwanie transakcji, przeglądanie historii transakcji, wizualizacja wydatków (np. wykresy), filtrowanie transakcji według kategorii.
+   - Cel: Analiza wydajności Reacta, zarządzanie stanem aplikacji za pomocą Redux, ocena złożoności i rozmiaru kodu oraz łatwości nauki.
+
+4. **Vue.js**: Aplikacja do planowania podróży.
+   - Funkcjonalności: dodawanie, edytowanie i usuwanie planów podróży, przeglądanie listy planów, wyszukiwanie planów podróży.
+   - Cel: Ocena wydajności Vue.js, zarządzanie stanem aplikacji za pomocą Vuex, łatwość użycia i nauki, złożoność i rozmiar kodu.
+
+5. **Solid**: Aplikacja do zarządzania kontaktami.
+   - Funkcjonalności: dodawanie, edytowanie, usuwanie kontaktów, przeglądanie listy kontaktów, wyszukiwanie kontaktów.
+   - Cel: Porównanie szybkości renderowania Solid, zarządzanie stanem aplikacji, ocena ekosystemu i wsparcia społecznościowego.
+
+6. **Svelte**: Aplikacja do śledzenia nawyków.
+   - Funkcjonalności: dodawanie, edytowanie, usuwanie nawyków, przeglądanie historii nawyków, oznaczanie dni, w których nawyk został wykonany.
+   - Cel: Sprawdzenie wydajności i zużycia zasobów przez Svelte, łatwość użycia, zarządzanie stanem aplikacji, złożoność i rozmiar kodu.
+
+### Wydajność i szybkość renderowania:
+- **Narzędzia**: Lighthouse, WebPageTest.
+- **Metodologia**: Zmierzenie czasu ładowania, czasu do interaktywności, szybkości renderowania stron dla każdej z aplikacji.
+
+### Łatwość użycia i nauki:
+- **Kryteria**: Dostępność dokumentacji, tutoriali, przykładów, łatwość zrozumienia i używania frameworka.
+- **Metodologia**: Przegląd dostępnych zasobów edukacyjnych, subiektywna ocena procesu nauki i pracy z każdym frameworkiem.
+
+### Zarządzanie stanem aplikacji:
+- **Frameworki**: React z Redux, Vue.js z Vuex, Angular z NgRx.
+- **Metodologia**: Analiza, jak każdy framework radzi sobie z zarządzaniem stanem aplikacji, ocena łatwości implementacji i używania.
+
+### Złożoność i rozmiar kodu:
+- **Kryteria**: Ilość kodu, złożoność kodu, łatwość utrzymania aplikacji.
+- **Metodologia**: Analiza rozmiaru i struktury kodu każdej aplikacji.
+
+### Wykorzystanie zasobów:
+- **Narzędzia**: Chrome DevTools, profilery pamięci i CPU.
+- **Metodologia**: Pomiar zużycia pamięci i CPU podczas działania aplikacji.
+
+### Wsparcie społecznościowe i ekosystem:
+- **Kryteria**: Aktywność społeczności, popularność na GitHubie, dostępność bibliotek i narzędzi.
+- **Metodologia**: Analiza wsparcia społecznościowego, popularności na GitHubie, ocena ekosystemu.
+
+### Bezpieczeństwo:
+- **Kryteria**: Mechanizmy zabezpieczające przed atakami (XSS, CSRF).
+- **Metodologia**: Audyt bezpieczeństwa aplikacji, ocena łatwości implementacji zabezpieczeń.
+
+### Podsumowanie:
+Po zbudowaniu i przetestowaniu aplikacji na każdym frameworku, porównamy wyniki dla każdego z podpunktów, co pozwoli na kompleksową ocenę każdego frameworka pod kątem wydajności, łatwości użycia, zarządzania stanem, złożoności kodu, wykorzystania zasobów, wsparcia społecznościowego oraz bezpieczeństwa.
