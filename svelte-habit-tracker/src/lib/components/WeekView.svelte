@@ -6,7 +6,7 @@
 	export let habits: {
 		id: number;
 		name: string;
-		streak: number;
+		bestStreak: number;
 		target: string;
 		color: string; // Just the color name without bg- prefix
 		completedDays?: string[]; // Array of dates in ISO format

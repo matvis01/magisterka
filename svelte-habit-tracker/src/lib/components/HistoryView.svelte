@@ -3,7 +3,7 @@
   export let habits: {
     id: number;
     name: string;
-    streak: number;
+    bestStreak: number;
     target: string;
     color: string;
     readonly completedDays?: string[];
@@ -205,8 +205,8 @@
           <div class={`bg-${habit.color} h-2.5 rounded-full`} style="width: {Math.floor(Math.random() * 100)}%"></div>
         </div>
         <div class="flex justify-between text-xs text-gray-500 mt-1">
-          <span>Current streak: {habit.streak} days</span>
-          <span>Best streak: {habit.streak + Math.floor(Math.random() * 10)} days</span>
+          <span>Current streak: {habit.bestStreak} days</span>
+          <span>Best streak: {habit.bestStreak + Math.floor(Math.random() * 10)} days</span>
         </div>
       </div>
     {/each}

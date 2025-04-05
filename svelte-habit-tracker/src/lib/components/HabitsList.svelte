@@ -5,7 +5,7 @@
 	export let habits: {
 		id: number;
 		name: string;
-		streak: number;
+		bestStreak: number; 
 		target: string;
 		color: string;
 	}[];
@@ -13,7 +13,7 @@
 	export let editingHabit: {
 		id: number;
 		name: string;
-		streak: number;
+		bestStreak: number;
 		target: string;
 		color: string;
 	};
