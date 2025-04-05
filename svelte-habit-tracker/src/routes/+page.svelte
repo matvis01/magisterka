@@ -6,6 +6,7 @@
   import HabitsList from '$lib/components/HabitsList.svelte';
   import HistoryView from '$lib/components/HistoryView.svelte';
   import type { Habit, WeekDate } from '$lib/types/habit';
+  import { calculateStreak } from '$lib/utils/habit';
   
   // Sample data now uses hex colors directly
   let habits: Habit[] = [
@@ -113,6 +114,14 @@
 		} else {
 			// Add date if not completed
 			updatedHabit.completedDays = [...updatedHabit.completedDays, dateStr];
+		}
+		
+		 // Calculate current streak after toggling completion
+		const currentStreak = calculateStreak(updatedHabit);
+		
+		// Update best streak if current streak is better
+		if (currentStreak > updatedHabit.bestStreak) {
+			updatedHabit.bestStreak = currentStreak;
 		}
 		
 		// Find and update the habit in the habits array

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { calculateStreak } from "$lib/utils/habit";
+
   
   export let habits: {
     id: number;
@@ -202,11 +204,11 @@
           <span class="text-sm text-gray-500">{habit.target}</span>
         </div>
         <div class="w-full bg-gray-200 rounded-full h-2.5">
-          <div class={`bg-${habit.color} h-2.5 rounded-full`} style="width: {Math.floor(Math.random() * 100)}%"></div>
+          <div class={`h-2.5 rounded-full`} style="width: {(calculateStreak(habit) / habit.bestStreak) * 100}%; background: {habit.color}"></div>
         </div>
         <div class="flex justify-between text-xs text-gray-500 mt-1">
-          <span>Current streak: {habit.bestStreak} days</span>
-          <span>Best streak: {habit.bestStreak + Math.floor(Math.random() * 10)} days</span>
+          <span>Current streak: {calculateStreak(habit)} days</span>
+            <span>Best streak: {habit.bestStreak} {habit.bestStreak === 1 ? 'day' : 'days'}</span>
         </div>
       </div>
     {/each}

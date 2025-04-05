@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Habit } from "$lib/types/habit";
-  import { isCompleted } from "$lib/utils/habit";
+  import { isCompleted, calculateStreak } from "$lib/utils/habit";
 
 	export let habits: {
 		id: number;
@@ -23,24 +23,7 @@
 	export let deleteHabit: (id: number) => void;
   export let toggleCompletion: (habit: Habit, date: Date) => void;
 
-
-  function calculateStreak(habit: Habit): number {
-    let completedDays = habit.completedDays || [];
-    const sortedCompletedDays = completedDays.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-    let currDay = new Date().toISOString().split('T')[0];
-    let currStreak = 0;
-    
-    for(let i = sortedCompletedDays.length - 1; i >= 0; i--) {
-      if (sortedCompletedDays[i] === currDay) {
-        currStreak++;
-        currDay = new Date(new Date(currDay).setDate(new Date(currDay).getDate() - 1)).toISOString().split('T')[0];
-      } else {
-        break;
-      }
-    }
-    return currStreak;
-  }
-
+  // Remove the calculateStreak function since we're importing it now
 </script>
 
 <div class="rounded-xl bg-white p-6 shadow-sm">
