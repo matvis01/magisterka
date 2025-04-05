@@ -43,7 +43,7 @@
 				<div class="flex items-center justify-center">
           <button
             aria-label="Habit completion for {habit.name} on {day.dayName}"
-            class={`h-8 w-8 rounded-full border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 
+            class={`h-8 w-8 rounded-full border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer
             ${isCompleted(habit, day.date) 
               ? 'border-transparent' 
               : 'border-gray-200 hover:border-gray-400'}`}

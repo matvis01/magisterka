@@ -81,10 +81,10 @@
     // Calculate intensity based on the percentage of completed habits
     const percentage = count / habits.length;
     
-    if (percentage < 0.25) return 'bg-emerald-200 text-emerald-800';
-    if (percentage < 0.5) return 'bg-emerald-300 text-emerald-800';
-    if (percentage < 0.75) return 'bg-emerald-400 text-white';
-    return 'bg-emerald-600 text-white';
+    if (percentage < 0.25) return 'bg-emerald-200 text-emerald-800 hover:bg-emerald-300';
+    if (percentage < 0.5) return 'bg-emerald-300 text-emerald-800 hover:bg-emerald-400';
+    if (percentage < 0.75) return 'bg-emerald-400 text-white hover:bg-emerald-500';
+    return 'bg-emerald-600 text-white hover:bg-emerald-700';
   }
   
   // Function to update calendar when month changes
@@ -126,7 +126,6 @@
     updateCalendar();
   }
 
-  // Initialize calendar with Monday as first day
   updateCalendar();
 </script>
 
@@ -143,7 +142,7 @@
         <h3 class="font-medium">Streak Calendar</h3>
         <div class="flex items-center space-x-4">
           <button 
-            class="p-1 rounded-full hover:bg-gray-200" 
+            class="p-1 rounded-full hover:bg-gray-200 cursor-pointer" 
             on:click={prevMonth}
             aria-label="Previous month"
           >
@@ -153,7 +152,7 @@
           </button>
           <span class="text-sm font-medium">{monthNames[displayMonth]} {displayYear}</span>
           <button 
-            class="p-1 rounded-full hover:bg-gray-200" 
+            class="p-1 rounded-full hover:bg-gray-200 cursor-pointer" 
             on:click={nextMonth}
             aria-label="Next month"
           >
@@ -171,8 +170,8 @@
             <div class="text-xs text-gray-500 font-medium text-center">{day}</div>
           {/each}
         </div>
-        
-        <!-- Simple calendar grid -->
+
+        <!-- Calendar grid -->
         <div class="grid grid-cols-7 gap-1">
           {#each calendarDays as day}
             {@const completedCount = day ? countCompletedHabits(day) : 0}
@@ -181,7 +180,7 @@
               title={day ? `${completedCount} habit${completedCount !== 1 ? 's' : ''} completed on day ${day}` : ''}
             >
               {#if day}
-                <span class="text-xs font-medium">{day}</span>
+                <span class="text-lg font-medium">{day}</span>
               {/if}
             </div>
           {/each}

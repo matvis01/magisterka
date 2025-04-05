@@ -67,13 +67,13 @@
 			<div class="flex justify-end gap-2">
 				<button
 					on:click={cancelEdit}
-					class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100"
+					class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
 				>
 					Cancel
 				</button>
 				<button
 					on:click={saveEdit}
-					class="rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
+					class="rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-700 cursor-pointer"
 				>
 					Save
 				</button>
@@ -88,7 +88,7 @@
 			>
 				<div class="flex items-center">
             <button 
-              class="mr-3 rounded-lg px-3 py-1 border w-28 text-center" 
+              class="mr-3 rounded-lg px-3 py-1 border w-28 text-center cursor-pointer" 
               style={isCompleted(habit, new Date()) ? 
                 `background-color: ${habit.color}; color: white; border-color: ${habit.color};` : 
                 `color: ${habit.color}; border-color: ${habit.color};`}
@@ -104,7 +104,7 @@
 				<div class="flex items-center gap-2">
 					<button
 						on:click={() => startEdit(habit)}
-						class="rounded-full p-2 text-gray-500 hover:bg-gray-200 hover:text-blue-600"
+						class="rounded-full p-2 text-gray-500 hover:bg-gray-200 hover:text-blue-600 cursor-pointer"
 						aria-label="Edit Habit"
 					>
 						<svg
@@ -120,7 +120,7 @@
 					</button>
 					<button
 						on:click={() => deleteHabit(habit.id)}
-						class="rounded-full p-2 text-gray-500 hover:bg-gray-200 hover:text-red-600"
+						class="rounded-full p-2 text-gray-500 hover:bg-gray-200 hover:text-red-600 cursor-pointer"
 						aria-label="Delete Habit"
 					>
 						<svg
