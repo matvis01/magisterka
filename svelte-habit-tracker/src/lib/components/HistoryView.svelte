@@ -1,11 +1,103 @@
 <script lang="ts">
+  
   export let habits: {
     id: number;
     name: string;
     streak: number;
     target: string;
     color: string;
+    readonly completedDays?: string[];
   }[];
+  
+  // Generate a simpler calendar data structure
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+  
+  // Get the number of days in the current month
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  
+  // Get the day of week (0-6) for the first day of the month
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+  
+  // Days of the week labels - rearranged to start with Monday
+  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  
+  // Define type for calendar day
+  type CalendarDay = number | null;
+  
+  // Create calendar array with day numbers and empty spaces
+  const calendarDays: CalendarDay[] = [];
+  
+  // Add empty cells for days before the first day of the month
+  for (let i = 0; i < firstDayOfMonth; i++) {
+    calendarDays.push(null);
+  }
+  
+  // Add days of the month
+  for (let i = 1; i <= daysInMonth; i++) {
+    calendarDays.push(i);
+  }
+
+  // Track the displayed month and year
+  let displayMonth = today.getMonth();
+  let displayYear = today.getFullYear();
+  
+  // Month names
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  // Function to update calendar when month changes
+  function updateCalendar() {
+    // Get the number of days in the displayed month
+    const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
+    
+    // Get the day of week (0-6, with 0 = Sunday) for the first day of the month
+    let firstDayOfMonth = new Date(displayYear, displayMonth, 1).getDay();
+    
+    // Convert Sunday from 0 to 6 for our Monday-start calendar
+    // This transforms: Sun=0, Mon=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
+    // To:           Mon=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6
+    firstDayOfMonth = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+    
+    // Clear and rebuild calendar array
+    calendarDays.length = 0;
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      calendarDays.push(null);
+    }
+    
+    // Add days of the month
+    for (let i = 1; i <= daysInMonth; i++) {
+      calendarDays.push(i);
+    }
+  }
+  
+  function prevMonth() {
+    if (displayMonth === 0) {
+      displayMonth = 11;
+      displayYear--;
+    } else {
+      displayMonth--;
+    }
+    updateCalendar();
+  }
+  
+  function nextMonth() {
+    if (displayMonth === 11) {
+      displayMonth = 0;
+      displayYear++;
+    } else {
+      displayMonth++;
+    }
+    updateCalendar();
+  }
+
+  // Initialize calendar with Monday as first day
+  updateCalendar();
 </script>
 
 <div>
@@ -16,14 +108,53 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"></div>
     
     <div class="bg-gray-50 p-4 rounded-lg">
-      <h3 class="font-medium mb-2">Streak Calendar</h3>
+      <!-- Month navigation header -->
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-medium">Streak Calendar</h3>
+        <div class="flex items-center space-x-4">
+          <button 
+            class="p-1 rounded-full hover:bg-gray-200" 
+            on:click={prevMonth}
+            aria-label="Previous month"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <span class="text-sm font-medium">{monthNames[displayMonth]} {displayYear}</span>
+          <button 
+            class="p-1 rounded-full hover:bg-gray-200" 
+            on:click={nextMonth}
+            aria-label="Next month"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
       
-      <div class="grid grid-cols-7 gap-1 mt-4">
-        {#each Array(35) as _, i}
-          <div 
-            class={`w-full aspect-square rounded-sm ${Math.random() > 0.5 ? 'bg-emerald-500' : 'bg-gray-200'}`}
-          ></div>
-        {/each}
+      <div class="flex flex-col mt-4">
+        <!-- Day of week header -->
+        <div class="grid grid-cols-7 gap-1 mb-1">
+          {#each daysOfWeek as day}
+            <div class="text-xs text-gray-500 font-medium text-center">{day}</div>
+          {/each}
+        </div>
+        
+        <!-- Simple calendar grid -->
+        <div class="grid grid-cols-7 gap-1">
+          {#each calendarDays as day}
+            <div 
+              class={`aspect-square rounded-sm flex items-center justify-center 
+                ${day ? 'bg-gray-200 hover:bg-gray-300' : 'bg-transparent'}`}
+            >
+              {#if day}
+                <span class="text-xs font-medium">{day}</span>
+              {/if}
+            </div>
+          {/each}
+        </div>
       </div>
     </div>
   </div>
