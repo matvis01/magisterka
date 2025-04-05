@@ -49,28 +49,58 @@
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   
+  // Function to check if any habit was completed on a specific day
+  function hasCompletedHabits(day: number): boolean {
+    if (!day) return false;
+    
+    // Create date string for the displayed month and the day
+    const dateStr = new Date(displayYear, displayMonth, day).toISOString().split('T')[0];
+    
+    // Check if any habit was completed on this date
+    return habits.some(habit => habit.completedDays?.includes(dateStr));
+  }
+  
+  // Function to count completed habits on a specific day
+  function countCompletedHabits(day: number): number {
+    if (!day) return 0;
+    
+    // Create date string for the displayed month and the day
+    const dateStr = new Date(displayYear, displayMonth, day).toISOString().split('T')[0];
+    
+    // Count habits completed on this date
+    return habits.filter(habit => habit.completedDays?.includes(dateStr)).length;
+  }
+  
+  // Function to get color class based on completion count
+  function getCompletionColorClass(day: number): string {
+    if (!day) return 'bg-transparent';
+    
+    const count = countCompletedHabits(day);
+    if (count === 0) return 'bg-gray-200 hover:bg-gray-300';
+    
+    // Calculate intensity based on the percentage of completed habits
+    const percentage = count / habits.length;
+    
+    if (percentage < 0.25) return 'bg-emerald-200 text-emerald-800';
+    if (percentage < 0.5) return 'bg-emerald-300 text-emerald-800';
+    if (percentage < 0.75) return 'bg-emerald-400 text-white';
+    return 'bg-emerald-600 text-white';
+  }
+  
   // Function to update calendar when month changes
   function updateCalendar() {
-    // Get the number of days in the displayed month
     const daysInMonth = new Date(displayYear, displayMonth + 1, 0).getDate();
     
-    // Get the day of week (0-6, with 0 = Sunday) for the first day of the month
     let firstDayOfMonth = new Date(displayYear, displayMonth, 1).getDay();
     
-    // Convert Sunday from 0 to 6 for our Monday-start calendar
-    // This transforms: Sun=0, Mon=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
-    // To:           Mon=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6
     firstDayOfMonth = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
     
-    // Clear and rebuild calendar array
     calendarDays.length = 0;
     
-    // Add empty cells for days before the first day of the month
     for (let i = 0; i < firstDayOfMonth; i++) {
       calendarDays.push(null);
     }
     
-    // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
       calendarDays.push(i);
     }
@@ -145,9 +175,10 @@
         <!-- Simple calendar grid -->
         <div class="grid grid-cols-7 gap-1">
           {#each calendarDays as day}
+            {@const completedCount = day ? countCompletedHabits(day) : 0}
             <div 
-              class={`aspect-square rounded-sm flex items-center justify-center 
-                ${day ? 'bg-gray-200 hover:bg-gray-300' : 'bg-transparent'}`}
+              class={`aspect-square rounded-sm flex items-center justify-center ${getCompletionColorClass(day || 0)}`}
+              title={day ? `${completedCount} habit${completedCount !== 1 ? 's' : ''} completed on day ${day}` : ''}
             >
               {#if day}
                 <span class="text-xs font-medium">{day}</span>

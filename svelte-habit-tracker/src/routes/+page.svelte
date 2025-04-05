@@ -122,8 +122,6 @@
 			habits = [...habits];
 		}
 	}
-
-  $: console.log(habits);
 </script>
 
 <main class="min-h-screen bg-gray-50 text-gray-800">
