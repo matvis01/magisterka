@@ -7,7 +7,6 @@
 		id: number;
 		name: string;
 		bestStreak: number;
-		target: string;
 		color: string; // Just the color name without bg- prefix
 		completedDays?: string[]; // Array of dates in ISO format
 	}[];

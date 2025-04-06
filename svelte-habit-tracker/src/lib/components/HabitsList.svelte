@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { Habit } from "$lib/types/habit";
   import { isCompleted, calculateStreak } from "$lib/utils/habit";
+  import ColorPicker from 'svelte-awesome-color-picker';
 
 	export let habits: {
 		id: number;
 		name: string;
 		bestStreak: number; 
-		target: string;
 		color: string;
 	}[];
 	export let editMode: boolean;
@@ -14,7 +14,6 @@
 		id: number;
 		name: string;
 		bestStreak: number;
-		target: string;
 		color: string;
 	};
 	export let startEdit: (habit: (typeof habits)[0]) => void;
@@ -22,8 +21,6 @@
 	export let cancelEdit: () => void;
 	export let deleteHabit: (id: number) => void;
   export let toggleCompletion: (habit: Habit, date: Date) => void;
-
-  // Remove the calculateStreak function since we're importing it now
 </script>
 
 <div class="rounded-xl bg-white p-6 shadow-sm">
@@ -38,14 +35,10 @@
 					type="text"
 					bind:value={editingHabit.name}
 					class="flex-grow rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
-				/>
-				<select
-					bind:value={editingHabit.target}
-					class="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-800 sm:w-32"
-				>
-					<option value="Daily">Daily</option>
-					<option value="Weekly">Weekly</option>
-				</select>
+						/>
+				<div class="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 p-2">
+					<ColorPicker bind:hex={editingHabit.color} isAlpha={false} />
+				</div>
 			</div>
 			<div class="flex justify-end gap-2">
 				<button
@@ -81,7 +74,7 @@
             </button>
 					<div>
 						<h3 class="font-medium">{habit.name}</h3>
-						<p class="text-sm text-gray-500">{habit.target} · {calculateStreak(habit)} day streak</p>
+						<p class="text-sm text-gray-500">{calculateStreak(habit)} day streak</p>
 					</div>
 				</div>
 				<div class="flex items-center gap-2">

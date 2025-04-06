@@ -6,7 +6,6 @@
     id: number;
     name: string;
     bestStreak: number;
-    target: string;
     color: string;
     readonly completedDays?: string[];
   }[];
@@ -50,17 +49,6 @@
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  
-  // Function to check if any habit was completed on a specific day
-  function hasCompletedHabits(day: number): boolean {
-    if (!day) return false;
-    
-    // Create date string for the displayed month and the day
-    const dateStr = new Date(displayYear, displayMonth, day).toISOString().split('T')[0];
-    
-    // Check if any habit was completed on this date
-    return habits.some(habit => habit.completedDays?.includes(dateStr));
-  }
   
   // Function to count completed habits on a specific day
   function countCompletedHabits(day: number): number {
@@ -198,10 +186,9 @@
       <div class="bg-gray-50 p-4 rounded-lg">
         <div class="flex justify-between items-center mb-2">
           <div class="flex items-center">
-            <div class={`w-3 h-3 rounded-full bg-${habit.color} mr-2`}></div>
+            <div class={`w-3 h-3 rounded-full mr-2`} style={`background-color: ${habit.color};`}></div>
             <span class="font-medium">{habit.name}</span>
           </div>
-          <span class="text-sm text-gray-500">{habit.target}</span>
         </div>
         <div class="w-full bg-gray-200 rounded-full h-2.5">
           <div class={`h-2.5 rounded-full`} style="width: {(calculateStreak(habit) / habit.bestStreak) * 100}%; background: {habit.color}"></div>

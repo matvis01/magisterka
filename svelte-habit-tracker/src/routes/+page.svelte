@@ -10,16 +10,15 @@
   
   // Sample data now uses hex colors directly
   let habits: Habit[] = [
-    { id: 1, name: 'Morning Exercise', bestStreak: 5, target: 'Daily', color: '#10b981' },
-    { id: 2, name: 'Read 30 minutes', bestStreak: 3, target: 'Daily', color: '#8b5cf6' },
-    { id: 3, name: 'Drink 2L water', bestStreak: 7, target: 'Daily', color: '#0ea5e9' },
-    { id: 4, name: 'Meditate', bestStreak: 2, target: 'Daily', color: '#f59e0b' }
+    { id: 1, name: 'Morning Exercise', bestStreak: 5, color: '#10b981' },
+    { id: 2, name: 'Read 30 minutes', bestStreak: 3, color: '#8b5cf6' },
+    { id: 3, name: 'Drink 2L water', bestStreak: 7, color: '#0ea5e9' },
+    { id: 4, name: 'Meditate', bestStreak: 2, color: '#f59e0b' }
   ];
   
   let newHabitName = '';
-  let newHabitTarget = 'Daily';
   let editMode = false;
-  let editingHabit: Habit = { id: 0, name: '', bestStreak: 0, target: '', color: '' };
+  let editingHabit: Habit = { id: 0, name: '', bestStreak: 0, color: '' };
   let currentView = 'habits'; // 'habits' or 'history'
   
   // Generate dates for the current week
@@ -51,18 +50,13 @@
     }
   }
   
-  function addHabit() {
+  function addHabit(color: string) {
     if (newHabitName.trim()) {
-      // Use hex color values directly
-      const colors = ['#10b981', '#8b5cf6', '#0ea5e9', '#f59e0b', '#f43f5e'];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      
       habits = [...habits, {
         id: habits.length + 1,
         name: newHabitName,
         bestStreak: 0,
-        target: newHabitTarget,
-        color: randomColor
+        color: color
       }];
       
       newHabitName = '';
@@ -83,7 +77,7 @@
   
   function cancelEdit() {
     editMode = false;
-    editingHabit = { id: 0, name: '', bestStreak: 0, target: '', color: '' };
+    editingHabit = { id: 0, name: '', bestStreak: 0, color: '' };
   }
   
   function deleteHabit(id: number) {
@@ -138,7 +132,7 @@
     <Header {currentView} {switchView} />
     
     {#if currentView === 'habits'}
-      <AddHabitForm bind:newHabitName bind:newHabitTarget {addHabit} />
+      <AddHabitForm bind:newHabitName {addHabit} />
       <HabitsList {habits} {editMode} {editingHabit} {startEdit} {saveEdit} {cancelEdit} {deleteHabit}  {toggleCompletion}/>
       <WeekView {weekDates} {habits} {toggleCompletion} />
     {:else}
