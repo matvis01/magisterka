@@ -24,7 +24,7 @@
 		</div>
 		<button
 			on:click={() => addHabit(hex)}
-			class="rounded-lg bg-gray-800 px-6 py-2 text-white transition-colors hover:bg-gray-700"
+			class="rounded-lg bg-gray-800 px-6 py-2 text-white transition-colors hover:bg-gray-700 cursor-pointer"
 		>
 			Add Habit
 		</button>
