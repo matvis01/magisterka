@@ -7,7 +7,7 @@ type ContactProps = {
   image?: string
   notes?: string
   tags?: string[]
-  favourite?: boolean
+  favorite?: boolean
   edit: () => void
   children?: any
 }

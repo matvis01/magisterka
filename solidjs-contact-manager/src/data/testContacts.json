@@ -4,7 +4,7 @@
     "name": "John",
     "surname": "Doe",
     "email": "john.doe@example.com",
-    "phone": "1234567890",
+    "phone": "+48 1234567890",
     "image": "https://randomuser.me/api/portraits/men/1.jpg"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Jane",
     "surname": "Smith",
     "email": "jane.smith@example.com",
-    "phone": "9876543210",
+    "phone": "+1 9876543210",
     "image": "https://randomuser.me/api/portraits/women/1.jpg"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Alice",
     "surname": "Johnson",
     "email": "alice.johnson@example.com",
-    "phone": "5555555555",
+    "phone": "+44 5555555555",
     "image": "https://randomuser.me/api/portraits/women/2.jpg"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Michael",
     "surname": "Brown",
     "email": "michael.brown@example.com",
-    "phone": "2345678901",
+    "phone": "+33 2345678901",
     "image": "https://randomuser.me/api/portraits/men/2.jpg"
   },
   {
@@ -36,7 +36,7 @@
     "name": "Emma",
     "surname": "Davis",
     "email": "emma.davis@example.com",
-    "phone": "3456789012",
+    "phone": "+49 3456789012",
     "image": "https://randomuser.me/api/portraits/women/3.jpg"
   },
   {
@@ -44,7 +44,7 @@
     "name": "Robert",
     "surname": "Miller",
     "email": "robert.miller@example.com",
-    "phone": "4567890123",
+    "phone": "+39 4567890123",
     "image": "https://randomuser.me/api/portraits/men/3.jpg"
   },
   {
@@ -52,7 +52,7 @@
     "name": "Olivia",
     "surname": "Wilson",
     "email": "olivia.wilson@example.com",
-    "phone": "5678901234",
+    "phone": "+34 5678901234",
     "image": "https://randomuser.me/api/portraits/women/4.jpg"
   },
   {
@@ -60,7 +60,7 @@
     "name": "William",
     "surname": "Moore",
     "email": "william.moore@example.com",
-    "phone": "6789012345",
+    "phone": "+48 6789012345",
     "image": "https://randomuser.me/api/portraits/men/4.jpg"
   },
   {
@@ -68,7 +68,7 @@
     "name": "Sophia",
     "surname": "Taylor",
     "email": "sophia.taylor@example.com",
-    "phone": "7890123456",
+    "phone": "+1 7890123456",
     "image": "https://randomuser.me/api/portraits/women/5.jpg"
   },
   {
@@ -76,7 +76,7 @@
     "name": "James",
     "surname": "Anderson",
     "email": "james.anderson@example.com",
-    "phone": "8901234567",
+    "phone": "+44 8901234567",
     "image": "https://randomuser.me/api/portraits/men/5.jpg"
   }
 ]

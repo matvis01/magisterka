@@ -1,4 +1,5 @@
-import { createSignal, createEffect, createResource } from "solid-js"
+import { createSignal, createEffect } from "solid-js"
+import countryCodes from "../data/CountryCodes.json"
 
 function validateEmail(email: string) {
   return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
@@ -7,11 +8,6 @@ function validateEmail(email: string) {
 function validatePhone(phone: string) {
   return /^\+?\d{7,15}$/.test(phone.replace(/\s/g, ''))
 }
-
-const [countryCodes] = createResource(async () => {
-  const response = await fetch('/data/CountryCodes.json')
-  return response.json()
-})
 
 interface Contact {
   id: number
@@ -22,7 +18,7 @@ interface Contact {
   image: string
   notes?: string
   tags?: string[]
-  favourite?: boolean
+  favorite?: boolean
 }
 
 interface AddContactProps {
@@ -42,7 +38,7 @@ const AddContact = (props: AddContactProps) => {
   const [image, setImage] = createSignal("")
   const [notes, setNotes] = createSignal("")
   const [tags, setTags] = createSignal("")
-  const [favourite, setFavourite] = createSignal(false)
+  const [favorite, setFavorite] = createSignal(false)
 
   createEffect(() => {
     if (props.contactToEdit) {
@@ -52,7 +48,7 @@ const AddContact = (props: AddContactProps) => {
       
       const phoneNumber = props.contactToEdit.phone;
       const countryCodeMatch = phoneNumber.match(/^\+\d+/);
-      if (countryCodeMatch && countryCodes()?.some((c:any) => c.dial_code === countryCodeMatch[0])) {
+      if (countryCodeMatch && countryCodes?.some((c:any) => c.dial_code === countryCodeMatch[0])) {
         setCountryCode(countryCodeMatch[0]);
         setPhone(phoneNumber.substring(countryCodeMatch[0].length).trim());
       } else {
@@ -63,7 +59,7 @@ const AddContact = (props: AddContactProps) => {
       setImage(props.contactToEdit.image)
       setNotes(props.contactToEdit.notes || "")
       setTags((props.contactToEdit.tags || []).join(", "))
-      setFavourite(!!props.contactToEdit.favourite)
+      setFavorite(!!props.contactToEdit.favorite)
     } else {
       setName("")
       setSurname("")
@@ -73,7 +69,7 @@ const AddContact = (props: AddContactProps) => {
       setImage("")
       setNotes("")
       setTags("")
-      setFavourite(false)
+      setFavorite(false)
     }
   })
 
@@ -133,7 +129,7 @@ const AddContact = (props: AddContactProps) => {
       image: image(),
       notes: notes(),
       tags: tags().split(",").map(t => t.trim()).filter(Boolean),
-      favourite: favourite(),
+      favorite: favorite(),
     }
     props.onAddContact(newContact)
 
@@ -147,7 +143,7 @@ const AddContact = (props: AddContactProps) => {
     setImage("")
     setNotes("")
     setTags("")
-    setFavourite(false)
+    setFavorite(false)
 
     ;(document.getElementById("add_modal") as HTMLDialogElement)?.close()
   }
@@ -216,7 +212,7 @@ const AddContact = (props: AddContactProps) => {
                   value={countryCode()} 
                   onChange={(e) => setCountryCode(e.currentTarget.value)}
                 >
-                  {countryCodes()?.map((country:any) => (
+                  {countryCodes?.map((country:any) => (
                     <option value={country.dial_code}>{country.name} ({country.dial_code})</option>
                   ))}
                 </select>
@@ -280,13 +276,13 @@ const AddContact = (props: AddContactProps) => {
             <div class="form-control flex-row items-center gap-2">
               <input
                 type="checkbox"
-                id="favourite"
-                checked={favourite()}
-                onInput={e => setFavourite(e.currentTarget.checked)}
+                id="favorite"
+                checked={favorite()}
+                onInput={e => setFavorite(e.currentTarget.checked)}
                 class="checkbox"
               />
-              <label class="label" for="favourite">
-                <span class="label-text">Favourite</span>
+              <label class="label" for="favorite">
+                <span class="label-text">favorite</span>
               </label>
             </div>
           </div>

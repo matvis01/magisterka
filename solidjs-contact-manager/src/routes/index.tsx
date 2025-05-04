@@ -12,23 +12,22 @@ type ContactType = {
   image: string
   notes?: string
   tags?: string[]
-  favourite?: boolean
+  favorite?: boolean
 }
 
 export default function Home() {
   const [searchVal, setSearchVal] = createSignal("")
   const [allContacts, setAllContacts] =
     createSignal<ContactType[]>(testContacts)
-  const [contacts, setContacts] = createSignal(allContacts())
   const [contactToEdit, setContactToEdit] = createSignal<
     ContactType | undefined
   >(undefined)
 
   const [sortBy, setSortBy] = createSignal<'name' | 'surname' | 'recent'>('name')
-  const [showFavourites, setShowFavourites] = createSignal(false)
+  const [showFavorites, setShowFavorites] = createSignal(false)
   const [selectedTag, setSelectedTag] = createSignal<string | null>(null)
   const [currentPage, setCurrentPage] = createSignal(1)
-  const pageSize = 6
+  const pageSize = 20
 
   function getAllTags() {
     const tags = new Set<string>()
@@ -38,7 +37,7 @@ export default function Home() {
 
   const filteredContacts = createMemo(() => {
     let list = allContacts()
-    if (showFavourites()) list = list.filter(c => c.favourite)
+    if (showFavorites()) list = list.filter(c => c.favorite)
     if (selectedTag()) list = list.filter(c => (c.tags || []).includes(selectedTag()!))
     if (searchVal()) {
       const allValues = searchVal().split(" ")
@@ -90,8 +89,8 @@ export default function Home() {
     filterContacts(searchVal())
   }
 
-  function toggleFavourite(id: number) {
-    setAllContacts(allContacts().map(c => c.id === id ? { ...c, favourite: !c.favourite } : c))
+  function togglefavorite(id: number) {
+    setAllContacts(allContacts().map(c => c.id === id ? { ...c, favorite: !c.favorite } : c))
   }
 
   function handleExport() {
@@ -164,8 +163,8 @@ export default function Home() {
           >
             Add Contact
           </button>
-          <button class="btn btn-outline" onClick={() => setShowFavourites(f => !f)}>
-            {showFavourites() ? "Show All" : "Show Favourites"}
+          <button class="btn btn-outline" onClick={() => setShowFavorites(f => !f)}>
+            {showFavorites() ? "Show All" : "Show favorites"}
           </button>
           <select class="select select-bordered" value={sortBy()} onInput={e => setSortBy(e.currentTarget.value as any)}>
             <option value="name">Sort by Name</option>
@@ -198,11 +197,11 @@ export default function Home() {
             >
               <button 
                 class="btn btn-ghost btn-sm"
-                onClick={() => toggleFavourite(contact.id)}
-                title={contact.favourite ? "Remove from favourites" : "Add to favourites"}
+                onClick={() => togglefavorite(contact.id)}
+                title={contact.favorite ? "Remove from favorites" : "Add to favorites"}
               >
-                <span class={contact.favourite ? "text-yellow-400" : ""}>
-                  {contact.favourite ? '★' : '☆'}
+                <span class={contact.favorite ? "text-yellow-400" : ""}>
+                  {contact.favorite ? '★' : '☆'}
                 </span>
               </button>
             </Contact>
