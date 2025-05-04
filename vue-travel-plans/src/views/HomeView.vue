@@ -49,7 +49,7 @@ const deleteTravelPlan = (id: string, event: Event) => {
       </div>
     </header>
 
-    <main class="w-screen mx-auto py-8 px-4">
+    <main class="w-full mx-auto py-8 px-4">
       <!-- Search and Create New Travel Plan -->
       <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <div class="w-full md:w-1/2">
@@ -98,15 +98,14 @@ const deleteTravelPlan = (id: string, event: Event) => {
           </svg>
         </button>
       </div>
-
-      <!-- Travel Plans List -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="plan in travelStore.getFilteredTravelPlans"
           :key="plan.id"
-          class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+          class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+           @click="navigateToDetail(plan.id)" 
         >
-          <div class="relative h-48 overflow-hidden">
+          <div class="relative h-48 overflow-hidden ">
             <img
               :src="plan.imageUrl || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828'"
               :alt="plan.title"
@@ -154,7 +153,7 @@ const deleteTravelPlan = (id: string, event: Event) => {
             </div>
           </div>
           <div class="p-4">
-            <div @click="navigateToDetail(plan.id)" class="cursor-pointer">
+            <div>
               <h2 class="text-xl font-bold text-gray-800 mb-2">{{ plan.title }}</h2>
               <p class="text-gray-600 mb-2">{{ plan.description }}</p>
               <div class="flex items-center text-sm text-gray-500 mb-2">

@@ -56,7 +56,7 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <div v-if="travelPlan" class="min-h-screen w-screen bg-gray-100">
+  <div v-if="travelPlan" class="min-h-screen w-full bg-gray-100">
     <!-- Hero Banner -->
     <div class="relative h-64 md:h-80 bg-gray-900">
       <img
@@ -155,7 +155,7 @@ const formatDate = (dateString: string) => {
       </div>
     </div>
 
-    <div class="w-screen mx-auto py-8 px-4">
+    <div class="w-full mx-auto py-8 px-4">
       <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <!-- Travel Plan Overview -->
         <div class="p-6 border-b">
@@ -163,18 +163,18 @@ const formatDate = (dateString: string) => {
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
             <div class="bg-blue-50 p-4 rounded-lg">
               <div class="text-sm text-blue-500 font-semibold">Duration</div>
-              <div class="text-lg font-bold mt-1">{{ totalDays }} days</div>
-              <div class="text-sm text-gray-500 mt-1">
+              <div class="text-lg font-bold mt-1  text-gray-700">{{ totalDays }} days</div>
+              <div class="text-sm text-gray-500 mt-1 ">
                 {{ formatDate(travelPlan.startDate) }} - {{ formatDate(travelPlan.endDate) }}
               </div>
             </div>
             <div class="bg-green-50 p-4 rounded-lg">
               <div class="text-sm text-green-500 font-semibold">Destination</div>
-              <div class="text-lg font-bold mt-1">{{ travelPlan.destination }}</div>
+              <div class="text-lg font-bold mt-1  text-gray-700">{{ travelPlan.destination }}</div>
             </div>
             <div class="bg-purple-50 p-4 rounded-lg" v-if="travelPlan.budget">
               <div class="text-sm text-purple-500 font-semibold">Budget</div>
-              <div class="text-lg font-bold mt-1">${{ travelPlan.budget.toLocaleString() }}</div>
+              <div class="text-lg font-bold mt-1 text-gray-700">${{ travelPlan.budget.toLocaleString() }}</div>
             </div>
           </div>
           <p class="text-gray-600">{{ travelPlan.description }}</p>

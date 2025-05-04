@@ -431,10 +431,10 @@ const saveTravelPlan = () => {
           <div class="flex justify-end">
             <button
               v-if="isEditingStage"
-              @click="
-                isEditingStage = false
-                activeStageIndex = -1
-              "
+              @click="() => {
+                isEditingStage = false;
+                activeStageIndex = -1;
+              }"
               class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2 hover:bg-gray-400"
             >
               Cancel
