@@ -5,7 +5,11 @@ type ContactProps = {
   email: string
   phone: string
   image?: string
+  notes?: string
+  tags?: string[]
+  favourite?: boolean
   edit: () => void
+  children?: any
 }
 
 export default function Contact(props: ContactProps) {
@@ -23,15 +27,26 @@ export default function Contact(props: ContactProps) {
             class="rounded-full w-16 h-16"
           />
           <div class="flex-grow">
-            <h2 class="text-lg font-bold">
+            <h2 class="text-lg font-bold flex items-center gap-2">
               {name} {surname}
             </h2>
             <p class="text-sm">{email}</p>
             <p class="text-sm">{phone}</p>
+            {props.notes && <p class="text-xs mt-1 italic">{props.notes}</p>}
+            {props.tags && props.tags.length > 0 && (
+              <div class="flex flex-wrap gap-1 mt-1">
+                {props.tags.map(tag => (
+                  <span class="badge badge-outline badge-sm">{tag}</span>
+                ))}
+              </div>
+            )}
           </div>
-          <button onClick={props.edit} class="btn btn-ghost ml-auto">
-            <FiEdit2 />
-          </button>
+          <div class="flex flex-col gap-1 ml-auto">
+            <button onClick={props.edit} class="btn btn-ghost btn-sm">
+              <FiEdit2 />
+            </button>
+            {props.children}
+          </div>
         </div>
       </div>
     </div>
