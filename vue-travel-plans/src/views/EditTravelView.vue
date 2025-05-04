@@ -10,7 +10,7 @@ const router = useRouter()
 const travelStore = useTravelStore()
 const travelId = ref(route.params.id as string)
 
-const travelPlan = reactive<TravelPlan>({
+const travelPlan = reactive<TravelPlan & { imageFile?: File | null }>({
   id: '',
   title: '',
   description: '',
@@ -19,6 +19,7 @@ const travelPlan = reactive<TravelPlan>({
   destination: '',
   budget: undefined,
   imageUrl: '',
+  imageFile: null,
   stages: [],
 })
 
@@ -30,6 +31,7 @@ const newStage = reactive({
   endDate: '',
   location: '',
   imageUrl: '',
+  imageFile: null as File | null,
   activities: [''], // Start with one empty activity
 })
 
@@ -49,6 +51,23 @@ const isEditingStage = ref(false)
 const activeStageIndex = ref(-1)
 const isLoaded = ref(false)
 
+// File upload handlers
+const handleTravelImageUpload = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    travelPlan.imageFile = input.files[0];
+    travelPlan.imageUrl = URL.createObjectURL(input.files[0]);
+  }
+}
+
+const handleStageImageUpload = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    newStage.imageFile = input.files[0];
+    newStage.imageUrl = URL.createObjectURL(input.files[0]);
+  }
+}
+
 onMounted(() => {
   const existingPlan = travelStore.getTravelPlanById(travelId.value)
   if (!existingPlan) {
@@ -66,6 +85,7 @@ onMounted(() => {
     destination: existingPlan.destination,
     budget: existingPlan.budget,
     imageUrl: existingPlan.imageUrl || '',
+    imageFile: null,
     stages: existingPlan.stages.map((stage) => ({ ...stage })),
   })
 
@@ -139,6 +159,7 @@ const addStage = () => {
     endDate: '',
     location: '',
     imageUrl: '',
+    imageFile: null,
     activities: [''],
   })
 }
@@ -155,6 +176,7 @@ const editStage = (index: number) => {
     endDate: stage.endDate,
     location: stage.location,
     imageUrl: stage.imageUrl || '',
+    imageFile: null,
     activities: [...stage.activities, ''], // Add an empty activity for potential new ones
   })
 
@@ -334,28 +356,26 @@ const cancelStageEdit = () => {
             </div>
 
             <div>
-              <label class="block text-gray-700 font-medium mb-2">Budget (optional)</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span class="text-gray-500">$</span>
-                </div>
-                <input
-                  v-model.number="travelPlan.budget"
-                  type="number"
-                  placeholder="Your budget"
-                  class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                />
+              <label class="block text-gray-700 font-medium mb-2">Cover Image (optional)</label>
+              <div class="flex items-center">
+                <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-emerald-500 rounded-lg border-2 border-dashed border-emerald-500 tracking-wide cursor-pointer hover:bg-emerald-50 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span class="mt-2 text-sm">
+                    {{ travelPlan.imageFile ? travelPlan.imageFile.name : travelPlan.imageUrl ? 'Current image (click to change)' : 'Select or drag an image' }}
+                  </span>
+                  <input 
+                    type="file" 
+                    class="hidden" 
+                    accept="image/*"
+                    @change="handleTravelImageUpload"
+                  />
+                </label>
               </div>
-            </div>
-
-            <div>
-              <label class="block text-gray-700 font-medium mb-2">Image URL (optional)</label>
-              <input
-                v-model="travelPlan.imageUrl"
-                type="url"
-                placeholder="Image URL for your travel plan"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-              />
+              <div v-if="travelPlan.imageUrl" class="mt-2">
+                <img :src="travelPlan.imageUrl" alt="Selected image preview" class="h-24 object-cover rounded">
+              </div>
             </div>
 
             <div class="col-span-2">
@@ -453,13 +473,26 @@ const cancelStageEdit = () => {
             </div>
 
             <div class="col-span-2">
-              <label class="block text-gray-700 font-medium mb-2">Image URL (optional)</label>
-              <input
-                v-model="newStage.imageUrl"
-                type="url"
-                placeholder="Image URL for this stage"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-              />
+              <label class="block text-gray-700 font-medium mb-2">Stage Image (optional)</label>
+              <div class="flex items-center">
+                <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-emerald-500 rounded-lg border-2 border-dashed border-emerald-500 tracking-wide cursor-pointer hover:bg-emerald-50 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span class="mt-2 text-sm">
+                    {{ newStage.imageFile ? newStage.imageFile.name : newStage.imageUrl ? 'Current image (click to change)' : 'Select or drag an image' }}
+                  </span>
+                  <input 
+                    type="file" 
+                    class="hidden" 
+                    accept="image/*"
+                    @change="handleStageImageUpload"
+                  />
+                </label>
+              </div>
+              <div v-if="newStage.imageUrl" class="mt-2">
+                <img :src="newStage.imageUrl" alt="Selected image preview" class="h-24 object-cover rounded">
+              </div>
             </div>
 
             <div class="col-span-2">
