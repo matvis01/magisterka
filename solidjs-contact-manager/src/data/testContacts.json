@@ -5,7 +5,10 @@
     "surname": "Doe",
     "email": "john.doe@example.com",
     "phone": "+48 1234567890",
-    "image": "https://randomuser.me/api/portraits/men/1.jpg"
+    "image": "https://randomuser.me/api/portraits/men/1.jpg",
+    "notes": "Met at the tech conference. Works as a software developer.",
+    "tags": ["work", "tech", "friend"],
+    "favorite": true
   },
   {
     "id": 2,
@@ -13,7 +16,10 @@
     "surname": "Smith",
     "email": "jane.smith@example.com",
     "phone": "+1 9876543210",
-    "image": "https://randomuser.me/api/portraits/women/1.jpg"
+    "image": "https://randomuser.me/api/portraits/women/1.jpg",
+    "notes": "Marketing specialist from New York. Contact for design projects.",
+    "tags": ["work", "personal", "design"],
+    "favorite": false
   },
   {
     "id": 3,
@@ -21,7 +27,10 @@
     "surname": "Johnson",
     "email": "alice.johnson@example.com",
     "phone": "+44 5555555555",
-    "image": "https://randomuser.me/api/portraits/women/2.jpg"
+    "image": "https://randomuser.me/api/portraits/women/2.jpg",
+    "notes": "Project manager at ABC Corp. Great resource for project planning.",
+    "tags": ["work", "planning", "friend"],
+    "favorite": true
   },
   {
     "id": 4,
@@ -29,7 +38,10 @@
     "surname": "Brown",
     "email": "michael.brown@example.com",
     "phone": "+33 2345678901",
-    "image": "https://randomuser.me/api/portraits/men/2.jpg"
+    "image": "https://randomuser.me/api/portraits/men/2.jpg",
+    "notes": "Old college friend. Currently living in Paris.",
+    "tags": ["personal", "friend"],
+    "favorite": false
   },
   {
     "id": 5,
@@ -37,7 +49,10 @@
     "surname": "Davis",
     "email": "emma.davis@example.com",
     "phone": "+49 3456789012",
-    "image": "https://randomuser.me/api/portraits/women/3.jpg"
+    "image": "https://randomuser.me/api/portraits/women/3.jpg",
+    "notes": "UI/UX designer with 5 years of experience. Great for freelance work.",
+    "tags": ["work", "design", "freelance"],
+    "favorite": true
   },
   {
     "id": 6,
@@ -45,7 +60,10 @@
     "surname": "Miller",
     "email": "robert.miller@example.com",
     "phone": "+39 4567890123",
-    "image": "https://randomuser.me/api/portraits/men/3.jpg"
+    "image": "https://randomuser.me/api/portraits/men/3.jpg",
+    "notes": "Met during the web development workshop. Expert in React.",
+    "tags": ["tech", "work", "friend"],
+    "favorite": false
   },
   {
     "id": 7,
@@ -53,7 +71,10 @@
     "surname": "Wilson",
     "email": "olivia.wilson@example.com",
     "phone": "+34 5678901234",
-    "image": "https://randomuser.me/api/portraits/women/4.jpg"
+    "image": "https://randomuser.me/api/portraits/women/4.jpg",
+    "notes": "Product manager at XYZ Inc. Contact for business inquiries.",
+    "tags": ["work", "business", "personal"],
+    "favorite": true
   },
   {
     "id": 8,
@@ -61,7 +82,10 @@
     "surname": "Moore",
     "email": "william.moore@example.com",
     "phone": "+48 6789012345",
-    "image": "https://randomuser.me/api/portraits/men/4.jpg"
+    "image": "https://randomuser.me/api/portraits/men/4.jpg",
+    "notes": "Financial advisor. Contact for investment advice.",
+    "tags": ["finance", "work", "friend"],
+    "favorite": false
   },
   {
     "id": 9,
@@ -69,7 +93,10 @@
     "surname": "Taylor",
     "email": "sophia.taylor@example.com",
     "phone": "+1 7890123456",
-    "image": "https://randomuser.me/api/portraits/women/5.jpg"
+    "image": "https://randomuser.me/api/portraits/women/5.jpg",
+    "notes": "Content creator and social media specialist. Great for marketing campaigns.",
+    "tags": ["work", "personal"],
+    "favorite": true
   },
   {
     "id": 10,
@@ -77,6 +104,9 @@
     "surname": "Anderson",
     "email": "james.anderson@example.com",
     "phone": "+44 8901234567",
-    "image": "https://randomuser.me/api/portraits/men/5.jpg"
+    "image": "https://randomuser.me/api/portraits/men/5.jpg",
+    "notes": "Backend developer specialized in Node.js. Contact for technical projects.",
+    "tags": ["work", "tech", "friend"],
+    "favorite": false
   }
 ]

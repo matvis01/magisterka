@@ -13,11 +13,11 @@ type ContactProps = {
 }
 
 export default function Contact(props: ContactProps) {
-  const { name, surname, email, phone, image } = props
+  const { name, surname, email, phone, image, tags } = props
   return (
     <div class="card h-full flex card-compact bg-neutral w-full shadow-xl text-neutral-content">
       <div class="card-body">
-        <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3">
           <img
             src={
               image ||
@@ -26,16 +26,16 @@ export default function Contact(props: ContactProps) {
             alt="contact"
             class="rounded-full w-16 h-16"
           />
-          <div class="flex-grow">
+          <div class=" flex flex-col gap-1 w-full">
             <h2 class="text-lg font-bold flex items-center gap-2">
               {name} {surname}
             </h2>
             <p class="text-sm">{email}</p>
             <p class="text-sm">{phone}</p>
             {props.notes && <p class="text-xs mt-1 italic">{props.notes}</p>}
-            {props.tags && props.tags.length > 0 && (
+            {tags && tags.length > 0 && (
               <div class="flex flex-wrap gap-1 mt-1">
-                {props.tags.map(tag => (
+                {tags.map(tag => (
                   <span class="badge badge-outline badge-sm">{tag}</span>
                 ))}
               </div>

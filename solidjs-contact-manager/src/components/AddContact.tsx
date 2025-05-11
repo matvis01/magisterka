@@ -208,10 +208,11 @@ const AddContact = (props: AddContactProps) => {
               </label>
               <div class="flex gap-2">
                 <select 
-                  class="select select-bordered w-32" 
+                  class="select select-bordered w-24" 
                   value={countryCode()} 
                   onChange={(e) => setCountryCode(e.currentTarget.value)}
                 >
+                  <option disabled selected hidden>{countryCode()}</option>
                   {countryCodes?.map((country:any) => (
                     <option value={country.dial_code}>{country.name} ({country.dial_code})</option>
                   ))}
