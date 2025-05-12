@@ -83,6 +83,11 @@ const editStage = (index: number) => {
   currentStage.value = { ...stage }
   isEditingStage.value = true
   activeStageIndex.value = index
+  
+  // Scroll to the stage form after a small delay to ensure reactive updates
+  setTimeout(() => {
+    document.getElementById('stage-form-section')?.scrollIntoView({ behavior: 'smooth' })
+  }, 100)
 }
 
 const removeStage = (index: number) => {
@@ -311,13 +316,15 @@ const themeColor = props.mode === 'create' ? 'blue' : 'emerald'
   <!-- Stages Section -->
   <div class="bg-white shadow-md rounded-lg overflow-hidden mb-8" :class="{ 'border border-gray-100': mode === 'edit' }">
     <!-- Use the StageForm component -->
-    <StageForm 
-      :mode="mode" 
-      :isEditingStage="isEditingStage" 
-      :initialStage="currentStage"
-      @add-stage="handleAddStage"
-      @cancel-edit="cancelStageEdit"
-    />
+    <div id="stage-form-section">
+      <StageForm 
+        :mode="mode" 
+        :isEditingStage="isEditingStage" 
+        :initialStage="currentStage"
+        @add-stage="handleAddStage"
+        @cancel-edit="cancelStageEdit"
+      />
+    </div>
 
     <!-- List of added stages -->
     <div class="p-6" v-if="travelPlan.stages.length > 0">

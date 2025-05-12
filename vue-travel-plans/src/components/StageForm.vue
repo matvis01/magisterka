@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, defineProps, defineEmits } from 'vue'
+import { ref, reactive, defineProps, defineEmits, watch } from 'vue'
 import type { TravelStage } from '../types'
 
 // Props
@@ -35,19 +35,57 @@ const stageErrors = ref({
 })
 
 // Initialize with props data if editing existing stage
-if (props.initialStage) {
-  Object.assign(stage, {
-    id: props.initialStage.id || '',
-    title: props.initialStage.title || '',
-    description: props.initialStage.description || '',
-    startDate: props.initialStage.startDate || '',
-    endDate: props.initialStage.endDate || '',
-    location: props.initialStage.location || '',
-    imageUrl: props.initialStage.imageUrl || '',
-    imageFile: null,
-    activities: props.initialStage.activities ? [...props.initialStage.activities, ''] : [''],
-  })
+const initializeStage = () => {
+  // Reset errors
+  stageErrors.value = {
+    title: '',
+    dates: '',
+    location: '',
+  }
+  
+  if (props.initialStage) {
+    Object.assign(stage, {
+      id: props.initialStage.id || '',
+      title: props.initialStage.title || '',
+      description: props.initialStage.description || '',
+      startDate: props.initialStage.startDate || '',
+      endDate: props.initialStage.endDate || '',
+      location: props.initialStage.location || '',
+      imageUrl: props.initialStage.imageUrl || '',
+      imageFile: null,
+      activities: props.initialStage.activities && props.initialStage.activities.length > 0 
+        ? [...props.initialStage.activities, ''] 
+        : [''],
+    })
+  } else {
+    // Reset form when not editing
+    Object.assign(stage, {
+      id: '',
+      title: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      location: '',
+      imageUrl: '',
+      imageFile: null,
+      activities: [''],
+    })
+  }
 }
+
+// Initialize on component creation
+initializeStage()
+
+// Watch for changes to initialStage or isEditingStage
+watch(
+  [() => props.initialStage, () => props.isEditingStage],
+  ([newStage, isEditing]) => {
+    if (newStage || isEditing) {
+      initializeStage()
+    }
+  },
+  { immediate: true }
+)
 
 // File upload handler
 const handleStageImageUpload = (event: Event) => {
