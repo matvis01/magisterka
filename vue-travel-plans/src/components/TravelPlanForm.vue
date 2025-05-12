@@ -6,7 +6,7 @@ import StageForm from './StageForm.vue'
 
 // Props
 const props = defineProps<{
-  initialTravelPlan?: Partial<TravelPlan>,
+  initialTravelPlan?: Partial<TravelPlan> | null,
   mode: 'create' | 'edit',
   submitButtonText?: string
 }>()

@@ -9,7 +9,7 @@ const route = useRoute()
 const router = useRouter()
 const travelStore = useTravelStore()
 const travelId = ref(route.params.id as string)
-const existingPlan = ref<TravelPlan | null>(null)
+const existingPlan = ref<Partial<TravelPlan> | null>(null)
 const isLoaded = ref(false)
 
 onMounted(() => {

@@ -6,7 +6,7 @@ import type { TravelStage } from '../types'
 const props = defineProps<{
   mode: 'create' | 'edit',
   isEditingStage: boolean,
-  initialStage?: Partial<TravelStage>
+  initialStage?: Partial<TravelStage> | null
 }>()
 
 // Emits
