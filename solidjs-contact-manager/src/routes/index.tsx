@@ -124,7 +124,7 @@ export default function Home() {
 
   return (
     <main class="w-full h-full flex justify-center text-base-content ">
-      <div class="w-full max-w-screen-xl flex flex-col items-start gap-10 p-10">
+      <div class="w-full max-w-screen-xl flex flex-col items-start gap-10 md:p-10">
         <div class="w-full flex justify-between items-center">
           <h1 class="text text-4xl font-bold">Contacts</h1>
           <div class="dropdown dropdown-end">
@@ -166,12 +166,12 @@ export default function Home() {
           <button class="btn btn-outline" onClick={() => setShowFavorites(f => !f)}>
             {showFavorites() ? "Show All" : "Show favorites"}
           </button>
-          <select class="select select-bordered" value={sortBy()} onInput={e => setSortBy(e.currentTarget.value as any)}>
+          <select class="select select-bordered border-white" value={sortBy()} onInput={e => setSortBy(e.currentTarget.value as any)}>
             <option value="name">Sort by Name</option>
             <option value="surname">Sort by Surname</option>
             <option value="recent">Sort by Recently Added</option>
           </select>
-          <select class="select select-bordered" value={selectedTag() || ''} onInput={e => setSelectedTag(e.currentTarget.value || null)}>
+          <select class="select select-bordered border-white" value={selectedTag() || ''} onInput={e => setSelectedTag(e.currentTarget.value || null)}>
             <option value="">All Tags</option>
             <For each={getAllTags()}>{tag => <option value={tag}>{tag}</option>}</For>
           </select>
