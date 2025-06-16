@@ -22,6 +22,8 @@ export default function Home() {
   const [contactToEdit, setContactToEdit] = createSignal<
     ContactType | undefined
   >(undefined);
+  const [isModalOpen, setIsModalOpen] = createSignal(false);
+  const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
 
   const [sortBy, setSortBy] = createSignal<'name' | 'surname' | 'recent'>(
     'name'
@@ -137,14 +139,15 @@ export default function Home() {
   function validatePhone(phone: string) {
     return /^\+?\d{7,15}$/.test(phone.replace(/\s/g, ''));
   }
-
   return (
-    <main class='w-full h-full flex justify-center text-base-content '>
+    <main class='w-full h-full flex justify-center text-gray-900 bg-gray-50 min-h-screen'>
       <div class='w-full max-w-screen-xl flex flex-col items-start gap-10 p-2 md:p-10'>
         <div class='w-full flex justify-between items-center'>
-          <h1 class='text text-4xl font-bold'>Contacts</h1>
-          <div class='dropdown dropdown-end'>
-            <label tabindex='0' class='btn btn-ghost btn-sm'>
+          <h1 class='text-4xl font-bold text-gray-900'>Contacts</h1>          <div class='relative'>
+            <button 
+              class='p-2 rounded-lg hover:bg-gray-200 transition-colors'
+              onClick={() => setIsDropdownOpen(!isDropdownOpen())}
+            >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
@@ -159,52 +162,53 @@ export default function Home() {
                   d='M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z'
                 />
               </svg>
-            </label>
-            <ul
-              tabindex='0'
-              class='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
-            >
-              <li>
-                <button onClick={handleExport}>Export Contacts (JSON)</button>
-              </li>
-              <li>
-                <label class='w-full'>
+            </button>
+            <div class={`absolute right-0 mt-2 w-52 bg-white rounded-lg shadow-lg border border-gray-200 z-10 ${isDropdownOpen() ? 'block' : 'hidden'}`}>
+              <div class='py-1'>
+                <button 
+                  onClick={() => {
+                    handleExport();
+                    setIsDropdownOpen(false);
+                  }}
+                  class='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  Export Contacts (JSON)
+                </button>
+                <label class='w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer'>
                   Import Contacts (JSON)
                   <input
                     type='file'
                     accept='application/json'
                     class='hidden'
-                    onInput={handleImport}
+                    onInput={(e) => {
+                      handleImport(e);
+                      setIsDropdownOpen(false);
+                    }}
                   />
                 </label>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='flex flex-col md:flex-row w-full gap-2'>
+        </div>        <div class='flex flex-col md:flex-row w-full gap-2'>
           <input
-            class='input input-primary input-bordered w-full lg:w-1/2 xl:w-96'
+            class='px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full lg:w-1/2 xl:w-96'
             type='text'
             placeholder='Search (name, surname, email, phone, notes, tags)'
             value={searchVal()}
             onInput={(e) => filterContacts(e.currentTarget.value)}
-          />
-          <button
-            class='btn btn-primary w-fit'
+          />          <button
+            class='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors w-fit'
             onClick={() => {
               setContactToEdit(undefined);
-              (
-                document.getElementById('add_modal') as HTMLDialogElement
-              )?.showModal();
+              setIsModalOpen(true);
             }}
           >
             Add Contact
           </button>
-        </div>
-        <div class='flex gap-3 flex-wrap items-center'>
+        </div>        <div class='flex gap-3 flex-wrap items-center'>
           
           <select
-            class='select select-bordered border-white'
+            class='px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white'
             value={sortBy()}
             onInput={(e) => setSortBy(e.currentTarget.value as any)}
           >
@@ -213,7 +217,7 @@ export default function Home() {
             <option value='recent'>Sort by Recently Added</option>
           </select>
           <select
-            class='select select-bordered border-white'
+            class='px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white'
             value={selectedTag() || ''}
             onInput={(e) => setSelectedTag(e.currentTarget.value || null)}
           >
@@ -223,34 +227,33 @@ export default function Home() {
             </For>
           </select>
           <button
-            class='btn btn-outline'
+            class='px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors'
             onClick={() => setShowFavorites((f) => !f)}
           >
             {showFavorites() ? 'Show All' : 'Show favorites'}
           </button>
-        </div>
-
-        {/* Add Contact Modal */}
+        </div>        {/* Add Contact Modal */}
         <AddContact
           onAddContact={addOrUpdateContact}
           contactToEdit={contactToEdit()}
           onDeleteContact={deleteContact}
+          isOpen={isModalOpen()}
+          onClose={() => {
+            setIsModalOpen(false);
+            setContactToEdit(undefined);
+          }}
         />
 
         <div class='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 w-full justify-items-center items-center'>
           <For each={paginatedContacts()}>
             {(contact) => (
               <Contact
-                {...contact}
-                edit={() => {
+                {...contact}                edit={() => {
                   setContactToEdit(contact);
-                  (
-                    document.getElementById('add_modal') as HTMLDialogElement
-                  )?.showModal();
+                  setIsModalOpen(true);
                 }}
-              >
-                <button
-                  class='btn btn-ghost btn-sm'
+              >                <button
+                  class='p-1 rounded hover:bg-gray-200 transition-colors'
                   onClick={() => togglefavorite(contact.id)}
                   title={
                     contact.favorite
@@ -258,19 +261,18 @@ export default function Home() {
                       : 'Add to favorites'
                   }
                 >
-                  <span class={contact.favorite ? 'text-yellow-400' : ''}>
+                  <span class={contact.favorite ? 'text-yellow-400' : 'text-gray-400'}>
                     {contact.favorite ? '★' : '☆'}
                   </span>
                 </button>
               </Contact>
             )}
           </For>
-        </div>
-        <div class='flex justify-center w-full mt-6'>
-          <div class='join'>
+        </div>        <div class='flex justify-center w-full mt-6'>
+          <div class='flex rounded-lg border border-gray-300 overflow-hidden'>
             {/* Previous page button */}
             <button
-              class='join-item btn'
+              class='px-3 py-2 bg-white hover:bg-gray-50 border-r border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed'
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage() === 1}
             >
@@ -308,8 +310,10 @@ export default function Home() {
             >
               {(page) => (
                 <button
-                  class={`join-item btn ${
-                    currentPage() === page ? 'btn-active' : ''
+                  class={`px-3 py-2 border-r border-gray-300 ${
+                    currentPage() === page 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white hover:bg-gray-50'
                   }`}
                   onClick={() => setCurrentPage(page)}
                 >
@@ -320,7 +324,7 @@ export default function Home() {
 
             {/* Next page button */}
             <button
-              class='join-item btn'
+              class='px-3 py-2 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed'
               onClick={() =>
                 setCurrentPage((p) =>
                   Math.min(

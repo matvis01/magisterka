@@ -15,8 +15,8 @@ type ContactProps = {
 export default function Contact(props: ContactProps) {
   const { name, surname, email, phone, image, tags } = props
   return (
-    <div class="card h-full flex card-compact bg-neutral w-full shadow-xl text-neutral-content">
-      <div class="card-body">
+    <div class="bg-white rounded-lg shadow-md border border-gray-200 h-full flex flex-col w-full">
+      <div class="p-4 flex-1">
         <div class="flex items-center gap-3">
           <img
             src={
@@ -24,25 +24,25 @@ export default function Contact(props: ContactProps) {
               `https://eu.ui-avatars.com/api/?name=${name}+${surname}&size=250`
             }
             alt="contact"
-            class="rounded-full w-16 h-16"
+            class="rounded-full w-16 h-16 object-cover"
           />
           <div class=" flex flex-col gap-1 w-full">
-            <h2 class="text-lg font-bold flex items-center gap-2">
+            <h2 class="text-lg font-bold flex items-center gap-2 text-gray-900">
               {name} {surname}
             </h2>
-            <p class="text-sm">{email}</p>
-            <p class="text-sm">{phone}</p>
-            {props.notes && <p class="text-xs mt-1 italic">{props.notes}</p>}
+            <p class="text-sm text-gray-600">{email}</p>
+            <p class="text-sm text-gray-600">{phone}</p>
+            {props.notes && <p class="text-xs mt-1 italic text-gray-500">{props.notes}</p>}
             {tags && tags.length > 0 && (
               <div class="flex flex-wrap gap-1 mt-1">
                 {tags.map(tag => (
-                  <span class="badge badge-outline badge-sm">{tag}</span>
+                  <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full border border-blue-200">{tag}</span>
                 ))}
               </div>
             )}
           </div>
           <div class="flex flex-col gap-1 ml-auto">
-            <button onClick={props.edit} class="btn btn-ghost btn-sm">
+            <button onClick={props.edit} class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
               <FiEdit2 />
             </button>
             {props.children}

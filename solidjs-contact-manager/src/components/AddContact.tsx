@@ -25,6 +25,8 @@ interface AddContactProps {
   onAddContact: (contact: Contact) => void
   onDeleteContact?: (id: number) => void
   contactToEdit?: Contact
+  isOpen: boolean
+  onClose: () => void
 }
 
 const AddContact = (props: AddContactProps) => {
@@ -129,8 +131,7 @@ const AddContact = (props: AddContactProps) => {
       image: image(),
       notes: notes(),
       tags: tags().split(",").map(t => t.trim()).filter(Boolean),
-      favorite: favorite(),
-    }
+      favorite: favorite(),    }
     props.onAddContact(newContact)
 
     setName("")
@@ -145,70 +146,68 @@ const AddContact = (props: AddContactProps) => {
     setTags("")
     setFavorite(false)
 
-    ;(document.getElementById("add_modal") as HTMLDialogElement)?.close()
+    props.onClose()
   }
-
   const handleDelete = () => {
     if (props.contactToEdit && props.onDeleteContact) {
       props.onDeleteContact(props.contactToEdit.id)
-      ;(document.getElementById("add_modal") as HTMLDialogElement)?.close()
+      props.onClose()
     }
   }
 
   return (
-    <dialog class="modal" id="add_modal">
-      <div class="modal-box">
-        <form onSubmit={handleSubmit} class="p-4 card rounded-md ">
-          <div class="grid grid-cols-2 w-full gap-3 items-end">
-            <div class="form-control">
-              <label class="label" for="name">
-                <span class="label-text">Name</span>
+    <div class={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${props.isOpen ? '' : 'hidden'}`}>
+      <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
+        <form onSubmit={handleSubmit} class="p-6">
+          <div class="grid grid-cols-2 w-full gap-4 items-end">
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="name">
+                Name
               </label>
               <input
                 type="text"
                 id="name"
                 value={name()}
                 onInput={(e) => setName(e.currentTarget.value)}
-                class="input input-bordered w-full"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 required
               />
             </div>
-            <div class="form-control">
-              <label class="label" for="surname">
-                <span class="label-text">Surname</span>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="surname">
+                Surname
               </label>
               <input
                 type="text"
                 id="surname"
                 value={surname()}
                 onInput={(e) => setSurname(e.currentTarget.value)}
-                class="input input-bordered w-full"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 required
               />
             </div>
-            <div class="form-control col-span-2">
-              <label class="label" for="email">
-                <span class="label-text">Email</span>
+            <div class="flex flex-col col-span-2">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="email">
+                Email
               </label>
               <input
                 type="email"
                 id="email"
                 value={email()}
                 onInput={handleEmailChange}
-                class="input input-bordered w-full"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 required
               />
               {emailError() && (
-                <span class="text-error text-sm">{emailError()}</span>
+                <span class="text-red-600 text-sm mt-1">{emailError()}</span>
               )}
-            </div>
-            <div class="form-control col-span-2">
-              <label class="label" for="phone">
-                <span class="label-text">Phone</span>
+            </div>            <div class="flex flex-col col-span-2">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="phone">
+                Phone
               </label>
               <div class="flex gap-2">
                 <select 
-                  class="select select-bordered w-24" 
+                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white w-24" 
                   value={countryCode()} 
                   onChange={(e) => setCountryCode(e.currentTarget.value)}
                 >
@@ -222,24 +221,23 @@ const AddContact = (props: AddContactProps) => {
                   id="phone"
                   value={phone()}
                   onInput={handlePhoneChange}
-                  class="input input-bordered flex-1"
+                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex-1"
                   placeholder="Phone number"
                   required
                 />
               </div>
               {phoneError() && (
-                <span class="text-error text-sm">{phoneError()}</span>
+                <span class="text-red-600 text-sm mt-1">{phoneError()}</span>
               )}
-            </div>
-            <div class="form-control">
-              <label class="label" for="image">
-                <span class="label-text">Image (optional)</span>
+            </div>            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="image">
+                Image (optional)
               </label>
               <input
                 type="file"
                 id="image"
                 onInput={handleImageChange}
-                class="file-input file-input-bordered w-full max-w-xs"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
                 accept="image/*"
               />
             </div>
@@ -247,73 +245,73 @@ const AddContact = (props: AddContactProps) => {
               <img
                 src={image()}
                 alt="Contact"
-                class="mt-2 w-14 h-14 object-cover rounded-full"
+                class="mt-2 w-14 h-14 object-cover rounded-full border-2 border-gray-200"
               />
             )}
-            <div class="form-control">
-              <label class="label" for="notes">
-                <span class="label-text">Notes</span>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="notes">
+                Notes
               </label>
               <textarea
                 id="notes"
                 value={notes()}
                 onInput={e => setNotes(e.currentTarget.value)}
-                class="textarea textarea-bordered w-full"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
                 rows={2}
               />
             </div>
-            <div class="form-control">
-              <label class="label" for="tags">
-                <span class="label-text">Tags (comma separated)</span>
+            <div class="flex flex-col">
+              <label class="text-sm font-medium text-gray-700 mb-1" for="tags">
+                Tags (comma separated)
               </label>
               <input
                 type="text"
                 id="tags"
                 value={tags()}
                 onInput={e => setTags(e.currentTarget.value)}
-                class="input input-bordered w-full"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
-            <div class="form-control flex-row items-center gap-2">
+            <div class="flex items-center gap-2">
               <input
                 type="checkbox"
                 id="favorite"
                 checked={favorite()}
                 onInput={e => setFavorite(e.currentTarget.checked)}
-                class="checkbox"
+                class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
-              <label class="label" for="favorite">
-                <span class="label-text">favorite</span>
+              <label class="text-sm font-medium text-gray-700" for="favorite">
+                Favorite
               </label>
-            </div>
-          </div>
+            </div>          </div>
           <div class="flex gap-4 mt-6">
             {props.contactToEdit && (
               <button
                 type="button"
-                class="btn btn-error flex-1"
+                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors flex-1"
                 onClick={handleDelete}
               >
                 Delete Contact
               </button>
             )}
-            <button type="submit" class="btn btn-primary flex-1">
+            <button 
+              type="submit" 
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex-1"
+            >
               {props.contactToEdit ? "Save Changes" : "Add Contact"}
             </button>
           </div>
-        </form>
-      </div>
-      <form method="dialog" class="modal-backdrop">
-        <button
+        </form>        <button
           type="button"
-          onClick={() =>
-            (document.getElementById("add_modal") as HTMLDialogElement)?.close()
-          }
+          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          onClick={props.onClose}
         >
-          Close
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         </button>
-      </form>
-    </dialog>
+      </div>
+    </div>
   )
 }
 
