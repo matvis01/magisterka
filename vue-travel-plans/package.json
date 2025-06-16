@@ -9,7 +9,11 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "analyze": "npm run build && node analyze-bundle.cjs && echo 'Opening visual analysis...' && start bundle-analysis.html",
+    "analyze-text": "npm run build && node analyze-bundle.cjs",
+    "analyze-visual": "npm run build && start bundle-analysis.html",
+    "analyze-detailed": "npm run build && node analyze-detailed.cjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
@@ -29,10 +33,13 @@
     "npm-run-all2": "^7.0.2",
     "postcss": "^8.5.3",
     "prettier": "3.5.3",
+    "rollup-plugin-visualizer": "^6.0.3",
     "tailwindcss": "^4.1.4",
     "typescript": "~5.8.0",
     "vite": "^6.2.4",
+    "vite-bundle-analyzer": "^0.22.3",
     "vite-plugin-vue-devtools": "^7.7.2",
-    "vue-tsc": "^2.2.8"
+    "vue-tsc": "^2.2.8",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

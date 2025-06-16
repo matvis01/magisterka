@@ -4,7 +4,10 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "analyze": "npm run build && node analyze-bundle.cjs && echo 'Opening visual analysis...' && start bundle-analysis.html",
+    "analyze-text": "npm run build && node analyze-bundle.cjs",
+    "analyze-visual": "npm run build && start bundle-analysis.html"
   },
   "dependencies": {
     "@solidjs/router": "^0.14.1",
@@ -17,5 +20,11 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "rollup-plugin-visualizer": "^6.0.3",
+    "source-map-explorer": "^2.5.3",
+    "vite-bundle-analyzer": "^0.22.3",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
