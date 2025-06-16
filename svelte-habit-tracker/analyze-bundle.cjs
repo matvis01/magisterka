@@ -128,5 +128,95 @@ if (foundFiles) {
   }
 }
 
+// Generate markdown report
+if (foundFiles) {
+  const reportContent = generateMarkdownReport(grandTotalSize, grandTotalGzipSize, possibleDirs);
+  fs.writeFileSync('BUNDLE_ANALYSIS_REPORT.md', reportContent);
+  console.log('\n📄 Report saved to: BUNDLE_ANALYSIS_REPORT.md');
+}
+
 console.log('\n✨ Analysis complete! Check bundle-analysis.html for visual details.');
 console.log('📋 Bundle composition shows Svelte\'s compilation efficiency.');
+
+function generateMarkdownReport(totalSize, totalGzipSize, directories) {
+  return `# Svelte Habit Tracker - Bundle Analysis Report
+
+*Generated on: ${new Date().toISOString().split('T')[0]}*
+
+## 📊 Bundle Overview
+
+**Total Bundle Size**: ${formatBytes(totalSize)}  
+**Total Gzipped Size**: ${formatBytes(totalGzipSize)}  
+**Compression Ratio**: ${((1 - totalGzipSize/totalSize) * 100).toFixed(1)}%
+
+## 🗂️ Directory Breakdown
+
+${directories.map(dir => {
+  if (fs.existsSync(dir.path)) {
+    const analysis = analyzeDirectory(dir.path);
+    if (analysis.files.length > 0) {
+      let content = `### 📁 ${dir.name}\n\n`;
+      content += `**Location**: \`${dir.path}\`  \n`;
+      content += `**Total Size**: ${analysis.totalSize} (${analysis.totalGzipSize} gzipped)\n\n`;
+      content += '| File | Size | Gzipped Size | Type |\n';
+      content += '|------|------|--------------|------|\n';
+      
+      analysis.files.forEach(file => {
+        const type = file.file.endsWith('.js') ? 'JavaScript' : 
+                    file.file.endsWith('.css') ? 'CSS' : 'Other';
+        const icon = file.file.endsWith('.js') ? '📜' : 
+                    file.file.endsWith('.css') ? '🎨' : '📄';
+        content += `| ${icon} ${file.file} | ${file.size} | ${file.gzipSize} | ${type} |\n`;
+      });
+      
+      return content;
+    }
+  }
+  return '';
+}).filter(content => content).join('\n')}
+
+## 📈 Performance Insights
+
+### Bundle Composition
+- **JavaScript Files**: ${directories.reduce((count, dir) => {
+  if (fs.existsSync(dir.path)) {
+    const analysis = analyzeDirectory(dir.path);
+    return count + analysis.files.filter(f => f.file.endsWith('.js')).length;
+  }
+  return count;
+}, 0)} files
+- **CSS Files**: ${directories.reduce((count, dir) => {
+  if (fs.existsSync(dir.path)) {
+    const analysis = analyzeDirectory(dir.path);
+    return count + analysis.files.filter(f => f.file.endsWith('.css')).length;
+  }
+  return count;
+}, 0)} files
+
+### Size Analysis
+- **Total Raw Size**: ${formatBytes(totalSize)}
+- **Total Compressed**: ${formatBytes(totalGzipSize)}
+- **Compression Efficiency**: ${((1 - totalGzipSize/totalSize) * 100).toFixed(1)}%
+
+## 🚀 Recommendations
+
+### Performance Optimizations
+1. **Code Splitting**: Consider implementing route-based code splitting
+2. **Tree Shaking**: Ensure unused code is eliminated during build
+3. **Asset Optimization**: Compress images and static assets
+4. **Lazy Loading**: Implement lazy loading for non-critical components
+
+### Bundle Monitoring
+1. Set up automated bundle size monitoring
+2. Track performance metrics over time
+3. Consider implementing performance budgets
+
+### SvelteKit Specific
+1. Leverage SvelteKit's built-in optimizations
+2. Use server-side rendering for better initial load
+3. Consider preloading critical resources
+
+---
+
+*Run \`npm run analyze:bundle\` to regenerate this report.*`;
+}

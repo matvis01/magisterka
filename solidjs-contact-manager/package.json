@@ -7,7 +7,10 @@
     "start": "vinxi start",
     "analyze": "npm run build && node analyze-bundle.cjs && echo 'Opening visual analysis...' && start bundle-analysis.html",
     "analyze-text": "npm run build && node analyze-bundle.cjs",
-    "analyze-visual": "npm run build && start bundle-analysis.html"
+    "analyze-visual": "npm run build && start bundle-analysis.html",
+    "analyze-code": "node analyze-code.cjs",
+    "analyze-lines": "npx sloc src",
+    "analyze-full": "node analyze-comprehensive.cjs"
   },
   "dependencies": {
     "@solidjs/router": "^0.14.1",
@@ -22,7 +25,9 @@
     "node": ">=18"
   },
   "devDependencies": {
+    "cloc": "^2.4.0-cloc",
     "rollup-plugin-visualizer": "^6.0.3",
+    "sloc": "^0.3.2",
     "source-map-explorer": "^2.5.3",
     "vite-bundle-analyzer": "^0.22.3",
     "webpack-bundle-analyzer": "^4.10.2"
