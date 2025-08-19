@@ -4,7 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+  "dev": "vite",
+  "dev:mon": "run-p dev \"monitor:vite {@}\" --",
+  "monitor:vite": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-by-port.ps1 -Port 5173 -DurationSec 300 -OutFile vite_metrics.csv",
+  "monitor:node": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName node -DurationSec 300 -OutFile node_metrics.csv",
+  "monitor:browser": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName chrome -DurationSec 300 -OutFile chrome_metrics.csv",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -13,7 +17,7 @@
     "analyze": "npm run build && node analyze-bundle.cjs && echo 'Opening visual analysis...' && start bundle-analysis.html",
     "analyze-text": "npm run build && node analyze-bundle.cjs",
     "analyze-visual": "npm run build && start bundle-analysis.html",
-    "analyze-detailed": "npm run build && node analyze-detailed.cjs"
+  "analyze-detailed": "npm run build && node analyze-detailed.cjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",

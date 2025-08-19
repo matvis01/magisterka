@@ -3,6 +3,10 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
+    "dev:mon": "run-p dev \"monitor:solid {@}\" --",
+    "monitor:solid": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-by-port.ps1 -Port 3000 -DurationSec 300 -OutFile solid_metrics.csv",
+    "monitor:node": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName node -DurationSec 300 -OutFile node_metrics.csv",
+    "monitor:browser": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName chrome -DurationSec 300 -OutFile chrome_metrics.csv",
     "build": "vinxi build",
     "start": "vinxi start",
     "analyze": "npm run build && node analyze-bundle.cjs && echo 'Opening visual analysis...' && start bundle-analysis.html",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "cloc": "^2.4.0-cloc",
+    "npm-run-all2": "^7.0.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "sloc": "^0.3.2",
     "source-map-explorer": "^2.5.3",

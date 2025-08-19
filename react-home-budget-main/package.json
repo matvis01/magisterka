@@ -1,0 +1,45 @@
+{
+  "name": "react-home-budget",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:mon": "run-p dev \"monitor:vite {@}\" --",
+    "monitor:vite": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-by-port.ps1 -Port 5173 -DurationSec 300 -OutFile vite_metrics.csv",
+    "monitor:node": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName node -DurationSec 300 -OutFile node_metrics.csv",
+    "monitor:browser": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/monitor-process.ps1 -ProcessName chrome -DurationSec 300 -OutFile chrome_metrics.csv",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@types/uuid": "^10.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.5.2",
+    "recharts": "^2.15.3",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "npm-run-all2": "^7.0.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0"
+  }
+}
