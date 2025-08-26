@@ -1,0 +1,30 @@
+
+> dev
+> vinxi dev
+
+[2m[34mvinxi[39m[22m [2m[33mv0.3.14[39m[22m
+[2m[34mvinxi[39m[22m [2m[32mstarting dev server[39m[22m
+
+[32m  ➜ Local:   [39m [36m[4mhttp://localhost:[1m3000[22m/[24m[39m
+[90m  ➜ Network:  use [37m--host[90m to expose[39m
+
+[2m19:49:30[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:30[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:30[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
+[2m19:49:33[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/components/Contact.tsx[22m
+[2m19:49:33[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Contact.tsx, /src/app.css[22m
